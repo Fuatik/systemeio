@@ -25,4 +25,11 @@ public class Coupon extends BaseEntity {
 
     @Column(name = "is_percentage", nullable = false)
     private boolean isPercentage;
+
+    public Coupon(Integer id, String code, double discount, boolean isPercentage) {
+        super(id);
+        this.code = code;
+        this.discount = discount;
+        this.isPercentage = isPercentage;
+    }
 }

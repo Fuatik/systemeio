@@ -20,5 +20,10 @@ public class Product extends NamedEntity {
 
     @Column(name = "price", nullable = false)
     @Range(min = 0)
-    private Long price;
+    private double price;
+
+    public Product(Integer id, String name, double price) {
+        super(id, name);
+        this.price = price;
+    }
 }
