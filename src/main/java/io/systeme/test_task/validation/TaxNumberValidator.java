@@ -1,6 +1,5 @@
 package io.systeme.test_task.validation;
 
-import io.systeme.test_task.exception.BadRequestException;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -26,7 +25,6 @@ public class TaxNumberValidator implements ConstraintValidator<TaxNumber, String
      * @param taxNumber The tax number to validate.
      * @param var       The constraint validator context.
      * @return True if the tax number is valid, otherwise false.
-     * @throws BadRequestException if the tax number is invalid.
      */
     @Override
     public boolean isValid(String taxNumber, ConstraintValidatorContext var) {

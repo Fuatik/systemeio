@@ -1,6 +1,5 @@
 package io.systeme.test_task.validation;
 
-import io.systeme.test_task.exception.BadRequestException;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -20,7 +19,6 @@ public class CouponValidator implements ConstraintValidator<Coupon, String> {
      * @param couponCode The coupon code to validate.
      * @param var        The constraint validator context.
      * @return True if the coupon code is valid, otherwise false.
-     * @throws BadRequestException if the coupon code is invalid.
      */
     @Override
     public boolean isValid(String couponCode, ConstraintValidatorContext var) {
