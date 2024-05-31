@@ -2,6 +2,8 @@ package io.systeme.test_task.web;
 
 import io.systeme.test_task.service.PricingService;
 
+import io.systeme.test_task.validation.Coupon;
+import io.systeme.test_task.validation.TaxNumber;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -28,7 +30,7 @@ public class CalculatePriceController {
 
     }
 
-    public record PriceRequest(@NotNull Integer productId, @NotBlank String taxNumber, String couponCode) {}
+    public record PriceRequest(@NotNull Integer productId, @NotBlank @TaxNumber String taxNumber, @Coupon String couponCode) {}
 
     public record PriceResponse(PriceRequest request, Double totalPrice) {}
 

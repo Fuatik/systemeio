@@ -10,18 +10,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ApiExceptionHandler {
 
-    @ExceptionHandler(PaymentException.class)
+    @ExceptionHandler({PaymentException.class, InvalidTaxNumberException.class, InvalidCouponCodeException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<?> handlePaymentException(PaymentException ex) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
-                HttpStatus.BAD_REQUEST,
-                ex.getMessage());
-        return new ResponseEntity<>(problemDetail, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(InvalidTaxNumberException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<?> handleInvalidTaxNumberException(InvalidTaxNumberException ex) {
+    public ResponseEntity<?> handleBadRequestExceptions(Exception ex) {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
                 HttpStatus.BAD_REQUEST,
                 ex.getMessage());
@@ -35,14 +26,5 @@ public class ApiExceptionHandler {
                 HttpStatus.NOT_FOUND,
                 ex.getMessage());
         return new ResponseEntity<>(problemDetail, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<?> handleGlobalException(Exception ex) {
-        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
-                HttpStatus.INTERNAL_SERVER_ERROR,
-                "An unexpected error occurred" + ex.getMessage());
-        return new ResponseEntity<>(problemDetail, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

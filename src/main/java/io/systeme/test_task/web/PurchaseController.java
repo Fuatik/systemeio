@@ -2,6 +2,8 @@ package io.systeme.test_task.web;
 
 import io.systeme.test_task.service.PaymentService;
 import io.systeme.test_task.service.PricingService;
+import io.systeme.test_task.validation.Coupon;
+import io.systeme.test_task.validation.TaxNumber;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -30,6 +32,6 @@ public class PurchaseController {
         return ResponseEntity.ok(response);
     }
 
-    public record PurchaseRequest (@NotNull Integer productId, @NotBlank String taxNumber, String couponCode, @NotBlank String paymentProcessor) {}
+    public record PurchaseRequest (@NotNull Integer productId, @NotBlank @TaxNumber String taxNumber, @Coupon String couponCode, @NotBlank String paymentProcessor) {}
     public record PurchaseResponse (PurchaseRequest request, Double totalPrice, String message) {}
 }
