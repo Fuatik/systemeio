@@ -1,5 +1,8 @@
 package io.systeme.test_task.payment;
 
+import org.springframework.stereotype.Component;
+
+@Component("paypal")
 public class Paypal implements PaymentProcessor {
     private void makePayment (Integer price) throws Exception {
         if (price > 100000) {

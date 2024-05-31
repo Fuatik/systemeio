@@ -5,15 +5,22 @@ import io.systeme.test_task.exception.PaymentException;
 import io.systeme.test_task.payment.PaymentProcessor;
 import io.systeme.test_task.payment.StripePaymentProcessor;
 import io.systeme.test_task.payment.Paypal;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PaymentService {
 
-    public void payWithProcessor(double totalPrice, String paymentProcessor) {
-        PaymentProcessor processor = getPaymentProcessor(paymentProcessor);
+    private PaymentProcessor paymentProcessor;
 
-        if (!processor.payWithProcessor(totalPrice)) throw new PaymentException("Payment failed");
+    public PaymentService(@Qualifier("paypal") PaymentProcessor paymentProcessor) {
+        this.paymentProcessor = paymentProcessor;
+    }
+
+    public void payWithProcessor(double totalPrice, String processorsName) {
+        this.paymentProcessor = getPaymentProcessor(processorsName);
+
+        if (!paymentProcessor.payWithProcessor(totalPrice)) throw new PaymentException("Payment failed");
     }
 
     private PaymentProcessor getPaymentProcessor(String paymentProcessor) {
