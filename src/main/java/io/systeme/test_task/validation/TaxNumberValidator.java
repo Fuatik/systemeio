@@ -39,7 +39,7 @@ public class TaxNumberValidator implements ConstraintValidator<TaxNumber, String
                 !FR_PATTERN.matcher(taxNumber).matches()) {
             var.disableDefaultConstraintViolation();
             var.buildConstraintViolationWithTemplate("Invalid tax number").addConstraintViolation();
-            throw new BadRequestException("Invalid tax number");
+            return false;
         }
         return true;
     }

@@ -33,7 +33,7 @@ public class PricingService {
      * @throws BadRequestException if the product or tax rate is not found.
      */
     public double calculateTotalPrice(Integer productId, String taxNumber, String couponCode) {
-        Product product = productRepository.findById(productId).orElseThrow(() -> new BadRequestException(productId.toString()));
+        Product product = productRepository.findById(productId).orElseThrow(() -> new BadRequestException("Product with id " + productId + " not found"));
         Coupon coupon = couponRepository.findByCode(couponCode);
 
         double price = product.getPrice();

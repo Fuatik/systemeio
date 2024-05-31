@@ -30,7 +30,7 @@ public class CouponValidator implements ConstraintValidator<Coupon, String> {
         if (!couponCode.matches(COUPON_PATTERN)) {
             var.disableDefaultConstraintViolation();
             var.buildConstraintViolationWithTemplate("Invalid coupon code").addConstraintViolation();
-            throw new BadRequestException("Invalid coupon code");
+            return false;
         }
         return true;
     }
