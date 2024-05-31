@@ -16,8 +16,8 @@ public class PurchaseControllerTest extends AbstractTest {
         setupMockRepositories();
 
         String purchaseRequest = String.format(
-                "{\"productId\": %d, \"taxNumber\": \"%s\", \"couponCode\": \"%s\", \"paymentProcessor\": \"%s\"}",
-                PRODUCT_ID, TAX_NUMBER, COUPON_CODE, PAYMENT_PROCESSOR
+                "{\"product\": %d, \"taxNumber\": \"%s\", \"couponCode\": \"%s\", \"paymentProcessor\": \"%s\"}",
+                PRODUCT_1, TAX_NUMBER, COUPON_CODE, PAYMENT_PROCESSOR
         );
 
         perform(MockMvcRequestBuilders.post("/purchase")
@@ -34,8 +34,8 @@ public class PurchaseControllerTest extends AbstractTest {
 
         // Создание запроса на покупку с несуществующим платежным процессором
         String purchaseBadRequest = String.format(
-                "{\"productId\": %d, \"taxNumber\": \"%s\", \"couponCode\": \"%s\", \"paymentProcessor\": \"%s\"}",
-                PRODUCT_ID, TAX_NUMBER, COUPON_CODE, INVALID_PAYMENT_PROCESSOR
+                "{\"product\": %d, \"taxNumber\": \"%s\", \"couponCode\": \"%s\", \"paymentProcessor\": \"%s\"}",
+                PRODUCT_1, TAX_NUMBER, COUPON_CODE, INVALID_PAYMENT_PROCESSOR
         );
 
         // Ожидаем, что при попытке покупки с несуществующим платежным процессором будет возвращен статус 400

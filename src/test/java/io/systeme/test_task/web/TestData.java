@@ -9,7 +9,7 @@ public class TestData {
     public static final Coupon COUPON = new Coupon("P15", 15, true);
     public static final Tax TAX_RATE = new Tax("DE", 0.19);
 
-    public static final int PRODUCT_ID = 1;
+    public static final int PRODUCT_1 = 1;
     public static final int PRODUCT_NOT_FOUND = 999;
     public static final String TAX_NUMBER = "DE123456789";
     public static final String INVALID_TAX_NUMBER = "INVALID123";

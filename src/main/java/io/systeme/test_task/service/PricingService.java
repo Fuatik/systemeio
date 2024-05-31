@@ -42,8 +42,8 @@ public class PricingService {
     }
 
     private double getTaxRateForTaxNumber(String taxNumber) {
-        String taxRegion = taxNumber.substring(0, 2);
-        Tax tax = taxRateRepository.findByRegion(taxRegion);
+        String region = taxNumber.substring(0, 2);
+        Tax tax = taxRateRepository.findByRegion(region);
 
         if (tax == null) {
             throw new BadRequestException(taxNumber);

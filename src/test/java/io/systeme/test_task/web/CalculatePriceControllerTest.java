@@ -16,8 +16,8 @@ class CalculatePriceControllerTest extends AbstractTest{
         setupMockRepositories();
 
         String priceRequest = String.format(
-                "{\"productId\": %d, \"taxNumber\": \"%s\", \"couponCode\": \"%s\"}",
-                PRODUCT_ID, TAX_NUMBER, COUPON_CODE
+                "{\"product\": %d, \"taxNumber\": \"%s\", \"couponCode\": \"%s\"}",
+                PRODUCT_1, TAX_NUMBER, COUPON_CODE
         );
 
         perform(MockMvcRequestBuilders.post("/calculate-price")
@@ -32,8 +32,8 @@ class CalculatePriceControllerTest extends AbstractTest{
         setupMockRepositories();
 
         String priceBadRequest = String.format(
-                "{\"productId\": %d, \"taxNumber\": \"%s\", \"couponCode\": \"%s\"}",
-                PRODUCT_ID, INVALID_TAX_NUMBER, COUPON_CODE
+                "{\"product\": %d, \"taxNumber\": \"%s\", \"couponCode\": \"%s\"}",
+                PRODUCT_1, INVALID_TAX_NUMBER, COUPON_CODE
         );
 
         perform(MockMvcRequestBuilders.post("/calculate-price")
@@ -47,8 +47,8 @@ class CalculatePriceControllerTest extends AbstractTest{
         setupMockRepositories();
 
         String priceBadRequest = String.format(
-                "{\"productId\": %d, \"taxNumber\": \"%s\", \"couponCode\": \"%s\"}",
-                PRODUCT_ID, TAX_NUMBER, INVALID_COUPON_CODE
+                "{\"product\": %d, \"taxNumber\": \"%s\", \"couponCode\": \"%s\"}",
+                PRODUCT_1, TAX_NUMBER, INVALID_COUPON_CODE
         );
 
         perform(MockMvcRequestBuilders.post("/calculate-price")
@@ -62,7 +62,7 @@ class CalculatePriceControllerTest extends AbstractTest{
         setupMockRepositories();
 
         String priceBadRequest = String.format(
-                "{\"productId\": %d, \"taxNumber\": \"%s\", \"couponCode\": \"%s\"}",
+                "{\"product\": %d, \"taxNumber\": \"%s\", \"couponCode\": \"%s\"}",
                 PRODUCT_NOT_FOUND, TAX_NUMBER, COUPON_CODE
         );
 

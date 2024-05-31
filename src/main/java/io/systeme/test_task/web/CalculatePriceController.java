@@ -22,7 +22,7 @@ public class CalculatePriceController {
     @PostMapping("/calculate-price")
     public ResponseEntity<?> calculatePrice(@RequestBody @Validated PriceRequest request) {
 
-        double totalPrice = pricingService.calculateTotalPrice(request.productId, request.taxNumber, request.couponCode);
+        double totalPrice = pricingService.calculateTotalPrice(request.product, request.taxNumber, request.couponCode);
 
         PriceResponse response = new PriceResponse(request, totalPrice);
 
@@ -30,7 +30,7 @@ public class CalculatePriceController {
 
     }
 
-    public record PriceRequest(@NotNull Integer productId, @NotBlank @TaxNumber String taxNumber, @Coupon String couponCode) {}
+    public record PriceRequest(@NotNull Integer product, @NotBlank @TaxNumber String taxNumber, @Coupon String couponCode) {}
 
     public record PriceResponse(PriceRequest request, Double totalPrice) {}
 

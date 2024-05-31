@@ -23,7 +23,7 @@ public class PurchaseController {
     @PostMapping("/purchase")
     public ResponseEntity<?> purchase(@RequestBody @Validated PurchaseRequest request) {
 
-        double totalPrice = pricingService.calculateTotalPrice(request.productId, request.taxNumber, request.couponCode);
+        double totalPrice = pricingService.calculateTotalPrice(request.product, request.taxNumber, request.couponCode);
 
         paymentService.payWithProcessor(totalPrice, request.paymentProcessor);
 
@@ -32,6 +32,6 @@ public class PurchaseController {
         return ResponseEntity.ok(response);
     }
 
-    public record PurchaseRequest (@NotNull Integer productId, @NotBlank @TaxNumber String taxNumber, @Coupon String couponCode, @NotBlank String paymentProcessor) {}
+    public record PurchaseRequest (@NotNull Integer product, @NotBlank @TaxNumber String taxNumber, @Coupon String couponCode, @NotBlank String paymentProcessor) {}
     public record PurchaseResponse (PurchaseRequest request, Double totalPrice, String message) {}
 }
