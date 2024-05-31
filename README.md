@@ -11,7 +11,7 @@ This repository contains a Spring Boot application for a test task. The applicat
    git clone https://github.com/Fuatik/systemeio
 3. Navigate to the project directory:
     ```zsh
-   cd test_task_systemeio
+   cd <directory_name>
 4. Build the application with Maven:
     ```zsh
    mvn clean package
@@ -20,5 +20,5 @@ This repository contains a Spring Boot application for a test task. The applicat
    docker-compose build
 6. Start the Docker containers:
     ```zsh
-   docker-compose build
+   docker-compose up
 7. The application should now be running. You can access the Swagger UI at http://localhost:8337/ to interact with the API endpoints.
