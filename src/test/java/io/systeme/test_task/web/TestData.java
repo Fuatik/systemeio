@@ -13,4 +13,14 @@ public class TestData {
     public static final String TAX_NUMBER = "DE123456789";
     public static final String COUPON_CODE = "P15";
     public static final String PAYMENT_PROCESSOR = "paypal";
+
+    public static double expectedTotalPrice = calculateExpectedPrice(
+            PRODUCT.getPrice(),
+            TAX_RATE.getRate(),
+            COUPON.getDiscount()
+    );
+
+    private static double calculateExpectedPrice(double basePrice, double taxRate, double discount) {
+        return Math.round((basePrice * (1 + taxRate)) * (1 - discount / 100) * 100.0) / 100.0;
+    }
 }

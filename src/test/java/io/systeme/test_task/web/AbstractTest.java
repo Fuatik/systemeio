@@ -13,13 +13,15 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.mockito.Mockito.when;
+
 @SpringBootTest
 @Transactional
 @ActiveProfiles("test")
 @AutoConfigureMockMvc(addFilters = false)
 public class AbstractTest {
     @Autowired
-    private MockMvc mockMvc;
+    protected MockMvc mockMvc;
 
     @MockBean
     protected ProductRepository productRepository;
@@ -29,6 +31,12 @@ public class AbstractTest {
 
     @MockBean
     protected TaxRateRepository taxRateRepository;
+
+    protected void setupMockRepositories() {
+        when(productRepository.findById(TestData.PRODUCT_ID)).thenReturn(java.util.Optional.of(TestData.PRODUCT));
+        when(couponRepository.findByCode(TestData.COUPON_CODE)).thenReturn(TestData.COUPON);
+        when(taxRateRepository.findByRegion("DE")).thenReturn(TestData.TAX_RATE);
+    }
 
     protected ResultActions perform(MockHttpServletRequestBuilder builder) throws Exception {
         return mockMvc.perform(builder);
