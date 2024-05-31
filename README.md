@@ -20,5 +20,5 @@ This repository contains a Spring Boot application for a test task. The applicat
    docker-compose build
 6. Start the Docker containers:
     ```zsh
-   docker-compose build
+   docker-compose up
 7. The application should now be running. You can access the Swagger UI at http://localhost:8337/ to interact with the API endpoints.
