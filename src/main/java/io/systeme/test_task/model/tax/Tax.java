@@ -8,17 +8,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "tax_rate")
+@Table(name = "tax")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TaxRate extends BaseEntity {
+public class Tax extends BaseEntity {
 
-    @Column(name = "tax_region", nullable = false)
-    private String taxRegion;
+    @Column(name = "region", nullable = false)
+    private String region;
 
-    @Column(name = "tax_rate", nullable = false)
-    private double taxRate;
+    @Column(name = "rate", nullable = false)
+    private double rate;
 }
 

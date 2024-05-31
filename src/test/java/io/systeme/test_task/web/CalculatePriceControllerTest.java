@@ -1,11 +1,9 @@
 package io.systeme.test_task.web;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.systeme.test_task.repository.CouponRepository;
 import io.systeme.test_task.repository.ProductRepository;
 import io.systeme.test_task.repository.TaxRateRepository;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -25,24 +23,27 @@ class CalculatePriceControllerTest extends AbstractTest{
     @MockBean
     private TaxRateRepository taxRateRepository;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
     @Test
     public void testCalculatePrice_Successful() throws Exception {
-        CalculatePriceController.PriceRequest request = new CalculatePriceController.PriceRequest(1, "DE123456789", "P15");
 
         when(productRepository.findById(1)).thenReturn(java.util.Optional.of(PRODUCT));
-        when(couponRepository.existsByCode("P15")).thenReturn(true);
         when(couponRepository.findByCode("P15")).thenReturn(COUPON);
-        when(taxRateRepository.findByTaxRegion("DE")).thenReturn(TAX_RATE);
+        when(taxRateRepository.findByRegion("DE")).thenReturn(TAX_RATE);
 
-        double expectedTotalPrice = Math.round((PRODUCT.getPrice() * (1 + 0.19)) * (1 - 0.15) * 100.0) / 100.0; // price * (1 + tax) * (1 - discount)
+        double expectedTotalPrice = calculateExpectedPrice(PRODUCT.getPrice(), TAX_RATE.getRate(), COUPON.getDiscount());
+
+        String priceRequest = "{\"productId\": " + PRODUCT_ID + ", " +
+                "\"taxNumber\": \"" + TAX_NUMBER + "\", " +
+                "\"couponCode\": \"" + COUPON_CODE + "\"}";
 
         perform(MockMvcRequestBuilders.post("/calculate-price")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(priceRequest))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.totalPrice").value(expectedTotalPrice));
+    }
+
+    private double calculateExpectedPrice(double basePrice, double taxRate, double discount) {
+        return Math.round((basePrice * (1 + taxRate)) * (1 - discount / 100) * 100.0) / 100.0;
     }
 }

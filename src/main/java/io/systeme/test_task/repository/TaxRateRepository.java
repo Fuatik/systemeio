@@ -1,8 +1,8 @@
 package io.systeme.test_task.repository;
 
-import io.systeme.test_task.model.tax.TaxRate;
+import io.systeme.test_task.model.tax.Tax;
 
-public interface TaxRateRepository extends BaseRepository<TaxRate> {
+public interface TaxRateRepository extends BaseRepository<Tax> {
 
-    TaxRate findByTaxRegion(String taxRegion);
+    Tax findByRegion(String taxRegion);
 }
