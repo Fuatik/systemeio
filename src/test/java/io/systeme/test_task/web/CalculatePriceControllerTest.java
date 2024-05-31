@@ -1,10 +1,6 @@
 package io.systeme.test_task.web;
 
-import io.systeme.test_task.repository.CouponRepository;
-import io.systeme.test_task.repository.ProductRepository;
-import io.systeme.test_task.repository.TaxRateRepository;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -14,14 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 class CalculatePriceControllerTest extends AbstractTest{
-    @MockBean
-    private ProductRepository productRepository;
-
-    @MockBean
-    private CouponRepository couponRepository;
-
-    @MockBean
-    private TaxRateRepository taxRateRepository;
 
     @Test
     public void testCalculatePrice_Successful() throws Exception {

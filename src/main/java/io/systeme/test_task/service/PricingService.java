@@ -8,20 +8,16 @@ import io.systeme.test_task.model.tax.Tax;
 import io.systeme.test_task.repository.CouponRepository;
 import io.systeme.test_task.repository.ProductRepository;
 import io.systeme.test_task.repository.TaxRateRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@AllArgsConstructor
 @Service
 public class PricingService {
 
     private final ProductRepository productRepository;
     private final CouponRepository couponRepository;
     private final TaxRateRepository taxRateRepository;
-
-    public PricingService(ProductRepository productRepository, CouponRepository couponRepository, TaxRateRepository taxRateRepository) {
-        this.productRepository = productRepository;
-        this.couponRepository = couponRepository;
-        this.taxRateRepository = taxRateRepository;
-    }
 
     public double calculateTotalPrice(Integer productId, String taxNumber, String couponCode) {
         Product product = productRepository.findById(productId).orElseThrow(() -> new NotFoundException(productId.toString()));

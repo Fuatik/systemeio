@@ -12,4 +12,5 @@ public class TestData {
     public static final int PRODUCT_ID = 1;
     public static final String TAX_NUMBER = "DE123456789";
     public static final String COUPON_CODE = "P15";
+    public static final String PAYMENT_PROCESSOR = "paypal";
 }

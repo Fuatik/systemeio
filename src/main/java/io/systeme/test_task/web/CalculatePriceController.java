@@ -4,31 +4,31 @@ import io.systeme.test_task.exception.InvalidTaxNumberException;
 import io.systeme.test_task.exception.NotFoundException;
 import io.systeme.test_task.service.PricingService;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+@AllArgsConstructor
 @RestController
 public class CalculatePriceController {
 
     private final PricingService pricingService;
 
-    public CalculatePriceController(PricingService pricingService) {
-        this.pricingService = pricingService;
-    }
-
     @PostMapping("/calculate-price")
-    public ResponseEntity<?> calculatePrice(@RequestBody PriceRequest request) {
+    public ResponseEntity<?> calculatePrice(@RequestBody @Validated PriceRequest request) {
         try {
             double totalPrice = pricingService.calculateTotalPrice(request.productId, request.taxNumber, request.couponCode);
 
             PriceResponse response = new PriceResponse(request, totalPrice);
 
             return ResponseEntity.ok(response);
-
         } catch (InvalidTaxNumberException e) {
             ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
                     HttpStatus.BAD_REQUEST,
@@ -42,7 +42,7 @@ public class CalculatePriceController {
         }
     }
 
-    public record PriceRequest(Integer productId, String taxNumber, String couponCode) {}
+    public record PriceRequest(@NotNull Integer productId, @NotBlank String taxNumber, String couponCode) {}
 
     public record PriceResponse(PriceRequest request, Double totalPrice) {}
 
