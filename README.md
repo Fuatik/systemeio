@@ -11,7 +11,7 @@ This repository contains a Spring Boot application for a test task. The applicat
    git clone https://github.com/Fuatik/systemeio
 3. Navigate to the project directory:
     ```zsh
-   cd test_task_systemeio
+   cd <directory_name>
 4. Build the application with Maven:
     ```zsh
    mvn clean package
