@@ -31,14 +31,14 @@ class CalculatePriceControllerTest extends AbstractTest{
     public void testCalculatePrice_InvalidTaxNumber() throws Exception {
         setupMockRepositories();
 
-        String badPriceRequest = String.format(
+        String priceBadRequest = String.format(
                 "{\"productId\": %d, \"taxNumber\": \"%s\", \"couponCode\": \"%s\"}",
                 PRODUCT_ID, INVALID_TAX_NUMBER, COUPON_CODE
         );
 
         perform(MockMvcRequestBuilders.post("/calculate-price")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(badPriceRequest))
+                .content(priceBadRequest))
                 .andExpect(status().isBadRequest());
     }
 
@@ -46,14 +46,14 @@ class CalculatePriceControllerTest extends AbstractTest{
     public void testCalculatePrice_InvalidCouponCode() throws Exception {
         setupMockRepositories();
 
-        String badPriceRequest = String.format(
+        String priceBadRequest = String.format(
                 "{\"productId\": %d, \"taxNumber\": \"%s\", \"couponCode\": \"%s\"}",
                 PRODUCT_ID, TAX_NUMBER, INVALID_COUPON_CODE
         );
 
         perform(MockMvcRequestBuilders.post("/calculate-price")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(badPriceRequest))
+                .content(priceBadRequest))
                 .andExpect(status().isBadRequest());
     }
 
@@ -61,14 +61,14 @@ class CalculatePriceControllerTest extends AbstractTest{
     public void testCalculatePrice_InvalidProductId() throws Exception {
         setupMockRepositories();
 
-        String badPriceRequest = String.format(
+        String priceBadRequest = String.format(
                 "{\"productId\": %d, \"taxNumber\": \"%s\", \"couponCode\": \"%s\"}",
                 PRODUCT_NOT_FOUND, TAX_NUMBER, COUPON_CODE
         );
 
         perform(MockMvcRequestBuilders.post("/calculate-price")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(badPriceRequest))
-                .andExpect(status().isNotFound());
+                .content(priceBadRequest))
+                .andExpect(status().isBadRequest());
     }
 }

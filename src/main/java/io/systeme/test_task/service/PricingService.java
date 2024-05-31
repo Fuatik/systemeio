@@ -1,7 +1,6 @@
 package io.systeme.test_task.service;
 
-import io.systeme.test_task.exception.InvalidTaxNumberException;
-import io.systeme.test_task.exception.NotFoundException;
+import io.systeme.test_task.exception.BadRequestException;
 import io.systeme.test_task.model.product.Coupon;
 import io.systeme.test_task.model.product.Product;
 import io.systeme.test_task.model.tax.Tax;
@@ -20,7 +19,7 @@ public class PricingService {
     private final TaxRateRepository taxRateRepository;
 
     public double calculateTotalPrice(Integer productId, String taxNumber, String couponCode) {
-        Product product = productRepository.findById(productId).orElseThrow(() -> new NotFoundException(productId.toString()));
+        Product product = productRepository.findById(productId).orElseThrow(() -> new BadRequestException(productId.toString()));
         Coupon coupon = couponRepository.findByCode(couponCode);
 
         double price = product.getPrice();
@@ -47,7 +46,7 @@ public class PricingService {
         Tax tax = taxRateRepository.findByRegion(taxRegion);
 
         if (tax == null) {
-            throw new InvalidTaxNumberException(taxNumber);
+            throw new BadRequestException(taxNumber);
         }
         return tax.getRate();
     }

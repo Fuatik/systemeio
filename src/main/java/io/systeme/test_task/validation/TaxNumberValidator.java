@@ -1,6 +1,6 @@
 package io.systeme.test_task.validation;
 
-import io.systeme.test_task.exception.InvalidTaxNumberException;
+import io.systeme.test_task.exception.BadRequestException;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -30,7 +30,7 @@ public class TaxNumberValidator implements ConstraintValidator<TaxNumber, String
                 !FR_PATTERN.matcher(taxNumber).matches()) {
             var.disableDefaultConstraintViolation();
             var.buildConstraintViolationWithTemplate("Invalid tax number").addConstraintViolation();
-            throw new InvalidTaxNumberException("Invalid tax number");
+            throw new BadRequestException("Invalid tax number");
         }
         return true;
     }

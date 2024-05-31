@@ -16,6 +16,7 @@ public class TestData {
     public static final String COUPON_CODE = "P15";
     public static final String INVALID_COUPON_CODE = "INVALID";
     public static final String PAYMENT_PROCESSOR = "paypal";
+    public static final String INVALID_PAYMENT_PROCESSOR = "INVALID";
 
     public static double expectedTotalPrice = calculateExpectedPrice(
             PRODUCT.getPrice(),

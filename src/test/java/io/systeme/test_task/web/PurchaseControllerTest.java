@@ -17,7 +17,7 @@ public class PurchaseControllerTest extends AbstractTest {
 
         String purchaseRequest = String.format(
                 "{\"productId\": %d, \"taxNumber\": \"%s\", \"couponCode\": \"%s\", \"paymentProcessor\": \"%s\"}",
-                TestData.PRODUCT_ID, TestData.TAX_NUMBER, TestData.COUPON_CODE, TestData.PAYMENT_PROCESSOR
+                PRODUCT_ID, TAX_NUMBER, COUPON_CODE, PAYMENT_PROCESSOR
         );
 
         perform(MockMvcRequestBuilders.post("/purchase")
@@ -26,5 +26,22 @@ public class PurchaseControllerTest extends AbstractTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.totalPrice").value(expectedTotalPrice))
                 .andExpect(jsonPath("$.message").value("Payment successful"));
+    }
+
+    @Test
+    public void testPurchase_Unsuccessful_NonExistingPaymentProcessor() throws Exception {
+        setupMockRepositories();
+
+        // Создание запроса на покупку с несуществующим платежным процессором
+        String purchaseBadRequest = String.format(
+                "{\"productId\": %d, \"taxNumber\": \"%s\", \"couponCode\": \"%s\", \"paymentProcessor\": \"%s\"}",
+                PRODUCT_ID, TAX_NUMBER, COUPON_CODE, INVALID_PAYMENT_PROCESSOR
+        );
+
+        // Ожидаем, что при попытке покупки с несуществующим платежным процессором будет возвращен статус 400
+        perform(MockMvcRequestBuilders.post("/purchase")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(purchaseBadRequest))
+                .andExpect(status().isBadRequest());
     }
 }

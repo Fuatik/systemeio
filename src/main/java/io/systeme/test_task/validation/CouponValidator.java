@@ -1,6 +1,6 @@
 package io.systeme.test_task.validation;
 
-import io.systeme.test_task.exception.InvalidCouponCodeException;
+import io.systeme.test_task.exception.BadRequestException;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -21,7 +21,7 @@ public class CouponValidator implements ConstraintValidator<Coupon, String> {
         if (!couponCode.matches(COUPON_PATTERN)) {
             var.disableDefaultConstraintViolation();
             var.buildConstraintViolationWithTemplate("Invalid coupon code").addConstraintViolation();
-            throw new InvalidCouponCodeException("Invalid coupon code");
+            throw new BadRequestException("Invalid coupon code");
         }
         return true;
     }
