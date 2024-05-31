@@ -13,12 +13,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * The CalculatePriceController class handles price calculation requests.
+ */
 @AllArgsConstructor
 @RestController
 public class CalculatePriceController {
 
     private final PricingService pricingService;
 
+    /**
+     * Calculates the total price of a product.
+     *
+     * @param request The price calculation request containing product, tax number, and coupon code.
+     * @return The response entity with the calculated total price.
+     */
     @PostMapping("/calculate-price")
     public ResponseEntity<?> calculatePrice(@RequestBody @Validated PriceRequest request) {
 

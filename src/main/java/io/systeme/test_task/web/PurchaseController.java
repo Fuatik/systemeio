@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * The PurchaseController class handles purchase requests.
+ */
 @AllArgsConstructor
 @RestController
 public class PurchaseController {
@@ -20,6 +23,12 @@ public class PurchaseController {
     private final PricingService pricingService;
     private final PaymentService paymentService;
 
+    /**
+     * Processes a purchase request.
+     *
+     * @param request The purchase request containing product, tax number, coupon code, and payment processor.
+     * @return The response entity with the purchase details.
+     */
     @PostMapping("/purchase")
     public ResponseEntity<?> purchase(@RequestBody @Validated PurchaseRequest request) {
 

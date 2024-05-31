@@ -7,15 +7,30 @@ import io.systeme.test_task.payment.Paypal;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+/**
+ * The PaymentService class handles payments using different payment processors.
+ */
 @Service
 public class PaymentService {
 
     private PaymentProcessor paymentProcessor;
 
+    /**
+     * Constructs a PaymentService with the specified PaymentProcessor.
+     *
+     * @param paymentProcessor The payment processor to be used.
+     */
     public PaymentService(@Qualifier("paypal") PaymentProcessor paymentProcessor) {
         this.paymentProcessor = paymentProcessor;
     }
 
+    /**
+     * Processes payment using the specified payment processor.
+     *
+     * @param totalPrice      The total price to be paid.
+     * @param processorsName  The name of the payment processor.
+     * @throws BadRequestException if the payment fails.
+     */
     public void payWithProcessor(double totalPrice, String processorsName) {
         this.paymentProcessor = getPaymentProcessor(processorsName);
 

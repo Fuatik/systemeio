@@ -18,7 +18,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Coupon extends BaseEntity {
 
-    //Strict coupon format: uppercase letter and two digits
     @Column(name = "code", nullable = false)
     @Pattern(regexp = "[A-Z][0-9]{2}", message = "Strict coupon format: uppercase letter and two digits")
     private String code;
@@ -28,11 +27,4 @@ public class Coupon extends BaseEntity {
 
     @Column(name = "is_percentage", nullable = false)
     private boolean isPercentage;
-
-    public Coupon(Integer id, String code, double discount, boolean isPercentage) {
-        super(id);
-        this.code = code;
-        this.discount = discount;
-        this.isPercentage = isPercentage;
-    }
 }

@@ -1,3 +1,24 @@
-# Product Payment Spring Boot Application
+# Test Task Systemeio
 
-This is a Spring Boot application for calculating product prices and making payments. The application uses PostgreSQL as the database and is containerized using Docker Compose.
+This repository contains a Spring Boot application for a test task. The application provides functionality related to pricing, purchasing, and payment processing.
+
+## Setup
+
+1. Ensure you have Docker installed on your machine.
+
+2. Clone this repository:
+   ```zsh
+   git clone https://github.com/Fuatik/systemeio
+3. Navigate to the project directory:
+    ```zsh
+   cd test_task_systemeio
+4. Build the application with Maven:
+    ```zsh
+   mvn clean package
+5. Build the Docker containers:
+    ```zsh
+   docker-compose build
+6. Start the Docker containers:
+    ```zsh
+   docker-compose build
+7. The application should now be running. You can access the Swagger UI at http://localhost:8337/ to interact with the API endpoints.

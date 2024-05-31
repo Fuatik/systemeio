@@ -6,6 +6,9 @@ import jakarta.validation.ConstraintValidatorContext;
 
 import java.util.regex.Pattern;
 
+/**
+ * The TaxNumberValidator class validates tax numbers based on predefined patterns for different countries.
+ */
 public class TaxNumberValidator implements ConstraintValidator<TaxNumber, String> {
 
     private static final Pattern DE_PATTERN = Pattern.compile("DE[0-9]{9}");
@@ -15,10 +18,16 @@ public class TaxNumberValidator implements ConstraintValidator<TaxNumber, String
 
 
     @Override
-    public void initialize(TaxNumber constraintAnnotation) {
-        // This method can be used to initialize the validator in any way, but it's not necessary here.
-    }
+    public void initialize(TaxNumber constraintAnnotation) {}
 
+    /**
+     * Validates the tax number.
+     *
+     * @param taxNumber The tax number to validate.
+     * @param var       The constraint validator context.
+     * @return True if the tax number is valid, otherwise false.
+     * @throws BadRequestException if the tax number is invalid.
+     */
     @Override
     public boolean isValid(String taxNumber, ConstraintValidatorContext var) {
         if (taxNumber == null) {

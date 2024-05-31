@@ -10,6 +10,11 @@ import io.systeme.test_task.repository.TaxRateRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+
+/**
+ * The PricingService class is responsible for calculating the total price of a product considering tax and coupon discounts.
+ * It interacts with ProductRepository, CouponRepository, and TaxRateRepository to fetch product details, coupon information, and tax rates, respectively.
+ */
 @AllArgsConstructor
 @Service
 public class PricingService {
@@ -18,6 +23,15 @@ public class PricingService {
     private final CouponRepository couponRepository;
     private final TaxRateRepository taxRateRepository;
 
+    /**
+     * Calculates the total price of a product with tax and coupon discounts.
+     *
+     * @param productId   The ID of the product.
+     * @param taxNumber   The tax number for tax calculation.
+     * @param couponCode  The coupon code for discount (optional).
+     * @return The total price of the product after applying tax and coupon discounts.
+     * @throws BadRequestException if the product or tax rate is not found.
+     */
     public double calculateTotalPrice(Integer productId, String taxNumber, String couponCode) {
         Product product = productRepository.findById(productId).orElseThrow(() -> new BadRequestException(productId.toString()));
         Coupon coupon = couponRepository.findByCode(couponCode);
