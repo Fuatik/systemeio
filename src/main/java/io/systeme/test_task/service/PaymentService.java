@@ -6,10 +6,12 @@ import io.systeme.test_task.payment.StripePaymentProcessor;
 import io.systeme.test_task.payment.Paypal;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * The PaymentService class handles payments using different payment processors.
  */
+@Transactional(readOnly = true)
 @Service
 public class PaymentService {
 
@@ -31,6 +33,7 @@ public class PaymentService {
      * @param processorsName  The name of the payment processor.
      * @throws BadRequestException if the payment fails.
      */
+    @Transactional
     public void payWithProcessor(double totalPrice, String processorsName) {
         this.paymentProcessor = getPaymentProcessor(processorsName);
 
