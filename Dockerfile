@@ -1,11 +1,11 @@
-# Используем официальный образ Java в качестве базового
-FROM openjdk:22-jdk-slim
-
-# Указываем рабочую директорию внутри контейнера
+# build stage
+FROM maven:3.9.6-eclipse-temurin-22 AS build
 WORKDIR /app
+COPY . /app
+RUN mvn clean package
 
-# Копируем файл jar из текущей директории в контейнер
-COPY target/test_task_systemeio-0.0.1-SNAPSHOT.jar app.jar
-
-# Указываем команду для запуска приложения
+# final stage
+FROM eclipse-temurin:22-jre
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]

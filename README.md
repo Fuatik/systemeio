@@ -12,13 +12,7 @@ This repository contains a Spring Boot application for a test task. The applicat
 3. Navigate to the project directory:
     ```zsh
    cd <directory_name>
-4. Build the application with Maven:
+4. Build and Start the Docker containers:
     ```zsh
-   mvn clean package
-5. Build the Docker containers:
-    ```zsh
-   docker-compose build
-6. Start the Docker containers:
-    ```zsh
-   docker-compose up
-7. The application should now be running. You can access the Swagger UI at http://localhost:8337/ to interact with the API endpoints.
+   docker-compose up --build
+5. The application should now be running. You can access the Swagger UI at http://localhost:8337/ to interact with the API endpoints.
