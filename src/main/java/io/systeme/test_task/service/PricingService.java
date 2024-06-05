@@ -51,11 +51,19 @@ public class PricingService {
 
     private double applyCouponDiscount(double price, Coupon coupon) {
         double discount = coupon.getDiscount();
+        double discountedPrice;
+
         if (coupon.isPercentage()) {
-            return price * (1 - discount / 100);
+            discountedPrice = price * (1 - discount / 100);
         } else {
-            return price - discount;
+            discountedPrice = price - discount;
         }
+
+        if (discountedPrice < 0) {
+            throw new BadRequestException("Total price after discount cannot be negative");
+        }
+
+        return discountedPrice;
     }
 
     private double getTaxRateForTaxNumber(String taxNumber) {
