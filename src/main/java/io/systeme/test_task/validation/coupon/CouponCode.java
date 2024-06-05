@@ -1,4 +1,4 @@
-package io.systeme.test_task.validation;
+package io.systeme.test_task.validation.coupon;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -11,10 +11,10 @@ import java.lang.annotation.Target;
 /**
  * The Coupon annotation is used to validate coupon codes.
  */
-@Constraint(validatedBy = CouponValidator.class)
+@Constraint(validatedBy = CouponCodeValidator.class)
 @Target({ ElementType.FIELD, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Coupon {
+public @interface CouponCode {
     String message() default "Invalid coupon code";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};

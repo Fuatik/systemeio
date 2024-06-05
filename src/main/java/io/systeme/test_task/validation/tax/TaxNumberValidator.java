@@ -1,4 +1,4 @@
-package io.systeme.test_task.validation;
+package io.systeme.test_task.validation.tax;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
