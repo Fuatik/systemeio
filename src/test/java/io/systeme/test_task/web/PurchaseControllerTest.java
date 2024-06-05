@@ -17,7 +17,7 @@ public class PurchaseControllerTest extends AbstractTest {
 
         String purchaseRequest = String.format(
                 "{\"product\": %d, \"taxNumber\": \"%s\", \"couponCode\": \"%s\", \"paymentProcessor\": \"%s\"}",
-                PRODUCT_1, TAX_NUMBER, COUPON_CODE, PAYMENT_PROCESSOR
+                PRODUCT_ID_1, TAX_NUMBER, COUPON_CODE, PAYMENT_PROCESSOR
         );
 
         perform(MockMvcRequestBuilders.post("/purchase")
@@ -34,12 +34,17 @@ public class PurchaseControllerTest extends AbstractTest {
 
         String purchaseBadRequest = String.format(
                 "{\"product\": %d, \"taxNumber\": \"%s\", \"couponCode\": \"%s\", \"paymentProcessor\": \"%s\"}",
-                PRODUCT_1, TAX_NUMBER, COUPON_CODE, INVALID_PAYMENT_PROCESSOR
+                PRODUCT_ID_1, TAX_NUMBER, COUPON_CODE, INVALID_PAYMENT_PROCESSOR
         );
 
         perform(MockMvcRequestBuilders.post("/purchase")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(purchaseBadRequest))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.type").value("about:blank"))
+                .andExpect(jsonPath("$.title").value("Bad Request"))
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.detail").value("Payment processor INVALID not found"))
+                .andExpect(jsonPath("$.instance").value("/purchase"));
     }
 }

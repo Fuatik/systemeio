@@ -17,7 +17,7 @@ class CalculatePriceControllerTest extends AbstractTest{
 
         String priceRequest = String.format(
                 "{\"product\": %d, \"taxNumber\": \"%s\", \"couponCode\": \"%s\"}",
-                PRODUCT_1, TAX_NUMBER, COUPON_CODE
+                PRODUCT_ID_1, TAX_NUMBER, COUPON_CODE
         );
 
         perform(MockMvcRequestBuilders.post("/calculate-price")
@@ -33,13 +33,18 @@ class CalculatePriceControllerTest extends AbstractTest{
 
         String priceBadRequest = String.format(
                 "{\"product\": %d, \"taxNumber\": \"%s\", \"couponCode\": \"%s\"}",
-                PRODUCT_1, INVALID_TAX_NUMBER, COUPON_CODE
+                PRODUCT_ID_1, INVALID_TAX_NUMBER, COUPON_CODE
         );
 
         perform(MockMvcRequestBuilders.post("/calculate-price")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(priceBadRequest))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.type").value("about:blank"))
+                .andExpect(jsonPath("$.title").value("Bad Request"))
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.detail").value("Invalid tax number"))
+                .andExpect(jsonPath("$.instance").value("/calculate-price"));
     }
 
     @Test
@@ -48,13 +53,18 @@ class CalculatePriceControllerTest extends AbstractTest{
 
         String priceBadRequest = String.format(
                 "{\"product\": %d, \"taxNumber\": \"%s\", \"couponCode\": \"%s\"}",
-                PRODUCT_1, TAX_NUMBER, INVALID_COUPON_CODE
+                PRODUCT_ID_1, TAX_NUMBER, INVALID_COUPON_CODE
         );
 
         perform(MockMvcRequestBuilders.post("/calculate-price")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(priceBadRequest))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.type").value("about:blank"))
+                .andExpect(jsonPath("$.title").value("Bad Request"))
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.detail").value("Invalid coupon code"))
+                .andExpect(jsonPath("$.instance").value("/calculate-price"));
     }
 
     @Test
@@ -69,6 +79,31 @@ class CalculatePriceControllerTest extends AbstractTest{
         perform(MockMvcRequestBuilders.post("/calculate-price")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(priceBadRequest))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.type").value("about:blank"))
+                .andExpect(jsonPath("$.title").value("Bad Request"))
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.detail").value("Product with id 999 not found"))
+                .andExpect(jsonPath("$.instance").value("/calculate-price"));
+    }
+
+    @Test
+    public void testCalculatePrice_NegativePriceAfterCoupon() throws Exception {
+        setupMockRepositories();
+
+        String priceRequest = String.format(
+                "{\"product\": %d, \"taxNumber\": \"%s\", \"couponCode\": \"%s\"}",
+                PRODUCT_ID_2, TAX_NUMBER, COUPON_CODE
+        );
+
+        perform(MockMvcRequestBuilders.post("/calculate-price")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(priceRequest))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.type").value("about:blank"))
+                .andExpect(jsonPath("$.title").value("Bad Request"))
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.detail").value("Total price after discount cannot be negative"))
+                .andExpect(jsonPath("$.instance").value("/calculate-price"));
     }
 }

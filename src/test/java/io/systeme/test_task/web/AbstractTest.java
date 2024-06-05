@@ -33,7 +33,8 @@ public class AbstractTest {
     protected TaxRateRepository taxRateRepository;
 
     protected void setupMockRepositories() {
-        when(productRepository.findById(TestData.PRODUCT_1)).thenReturn(java.util.Optional.of(TestData.PRODUCT));
+        when(productRepository.findById(TestData.PRODUCT_ID_1)).thenReturn(java.util.Optional.of(TestData.PRODUCT));
+        when(productRepository.findById(TestData.PRODUCT_ID_2)).thenReturn(java.util.Optional.of(TestData.PRODUCT_2));
         when(couponRepository.findByCode(TestData.COUPON_CODE)).thenReturn(TestData.COUPON);
         when(taxRateRepository.findByRegion("DE")).thenReturn(TestData.TAX_RATE);
     }

@@ -6,10 +6,12 @@ import io.systeme.test_task.model.tax.Tax;
 
 public class TestData {
     public static final Product PRODUCT = new Product(1, "Test Product", 100);
-    public static final Coupon COUPON = new Coupon("P15", 15, true);
+    public static final Product PRODUCT_2 = new Product(2, "Test Product", 10);
+    public static final Coupon COUPON = new Coupon("P15", 15, false);
     public static final Tax TAX_RATE = new Tax("DE", 0.19);
 
-    public static final int PRODUCT_1 = 1;
+    public static final int PRODUCT_ID_1 = 1;
+    public static final int PRODUCT_ID_2 = 2;
     public static final int PRODUCT_NOT_FOUND = 999;
     public static final String TAX_NUMBER = "DE123456789";
     public static final String INVALID_TAX_NUMBER = "INVALID123";
@@ -25,6 +27,6 @@ public class TestData {
     );
 
     private static double calculateExpectedPrice(double basePrice, double taxRate, double discount) {
-        return Math.round((basePrice * (1 + taxRate)) * (1 - discount / 100) * 100.0) / 100.0;
+        return Math.round(((basePrice - discount) * (1 + taxRate)) * 100.0) / 100.0;
     }
 }
