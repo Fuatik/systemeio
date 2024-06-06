@@ -44,7 +44,7 @@ public class PurchaseControllerTest extends AbstractTest {
                 .andExpect(jsonPath("$.type").value("about:blank"))
                 .andExpect(jsonPath("$.title").value("Bad Request"))
                 .andExpect(jsonPath("$.status").value(400))
-                .andExpect(jsonPath("$.detail").value("Payment processor INVALID not found"))
+                .andExpect(jsonPath("$.detail").value("Invalid payment processor"))
                 .andExpect(jsonPath("$.instance").value("/purchase"));
     }
 }
