@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * The Coupon annotation is used to validate coupon codes.
+ * The CouponCode annotation is used to validate coupon codes.
  */
 @Constraint(validatedBy = CouponCodeValidator.class)
 @Target({ ElementType.FIELD, ElementType.PARAMETER })

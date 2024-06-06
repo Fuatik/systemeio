@@ -1,4 +1,4 @@
-package io.systeme.test_task.validation.product;
+package io.systeme.test_task.validation.payment;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -8,14 +8,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * The VerifyProduct annotation is used to validate coupon codes.
- */
-@Constraint(validatedBy = VerifyProductValidator.class)
+@Constraint(validatedBy = VerifyPaymentProcessorValidator.class)
 @Target({ ElementType.FIELD, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface VerifyProduct {
-    String message() default "Product not found";
+public @interface VerifyPaymentProcessor {
+    String message() default "Invalid payment processor";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }
