@@ -1,10 +1,13 @@
 package io.systeme.test_task.payment;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@Component("paypal")
+@Component
+@AllArgsConstructor
 public class Paypal implements PaymentProcessor {
-    private void makePayment (Integer price) throws Exception {
+
+    private void makePayment(Integer price) throws Exception {
         if (price > 100000) {
             throw new Exception("Price exceeds the Paypal limit.");
         }
@@ -18,5 +21,10 @@ public class Paypal implements PaymentProcessor {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @Override
+    public String name() {
+        return "paypal";
     }
 }
