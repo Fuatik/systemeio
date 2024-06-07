@@ -88,6 +88,26 @@ class CalculatePriceControllerTest extends AbstractTest{
     }
 
     @Test
+    public void testCalculatePrice_InvalidProductJsonFormat() throws Exception {
+        setupMockRepositories();
+
+        String purchaseRequest = String.format(
+                "{\"product\": \"%s\", \"taxNumber\": \"%s\", \"couponCode\": \"%s\", \"paymentProcessor\": \"%s\"}",
+                "invalid_product", TAX_NUMBER, COUPON_CODE, PAYMENT_PROCESSOR
+        );
+
+        perform(MockMvcRequestBuilders.post("/calculate-price")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(purchaseRequest))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.type").value("about:blank"))
+                .andExpect(jsonPath("$.title").value("Bad Request"))
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.detail").value("JSON parse error: Cannot deserialize value of type `java.lang.Integer` from String \"invalid_product\": not a valid `java.lang.Integer` value"))
+                .andExpect(jsonPath("$.instance").value("/calculate-price"));
+    }
+
+    @Test
     public void testCalculatePrice_NegativePriceAfterCoupon() throws Exception {
         setupMockRepositories();
 

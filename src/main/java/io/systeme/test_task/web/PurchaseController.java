@@ -43,6 +43,11 @@ public class PurchaseController {
         return ResponseEntity.ok(response);
     }
 
-    public record PurchaseRequest (@NotNull @VerifyProduct Integer product, @NotBlank @TaxNumber String taxNumber, @CouponCode String couponCode, @NotBlank @VerifyPaymentProcessor String paymentProcessor) {}
-    public record PurchaseResponse (PurchaseRequest request, Double totalPrice, String message) {}
+    public record PurchaseRequest (@NotNull @VerifyProduct Integer product,
+                                   @NotBlank @TaxNumber String taxNumber,
+                                   @CouponCode String couponCode,
+                                   @NotBlank @VerifyPaymentProcessor String paymentProcessor) {}
+    public record PurchaseResponse (PurchaseRequest request,
+                                    Double totalPrice,
+                                    String message) {}
 }

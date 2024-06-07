@@ -3,6 +3,7 @@ package io.systeme.test_task.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -43,6 +44,19 @@ public class ApiExceptionHandler {
         ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
                 HttpStatus.BAD_REQUEST,
                 ex.getMessage());
+        problemDetail.setType(URI.create("about:blank"));
+        problemDetail.setTitle("Bad Request");
+        problemDetail.setInstance(URI.create(((ServletWebRequest)request).getRequest().getRequestURI()));
+        return new ResponseEntity<>(problemDetail, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<?> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex, WebRequest request) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+                HttpStatus.BAD_REQUEST,
+                ex.getMessage()
+        );
         problemDetail.setType(URI.create("about:blank"));
         problemDetail.setTitle("Bad Request");
         problemDetail.setInstance(URI.create(((ServletWebRequest)request).getRequest().getRequestURI()));
