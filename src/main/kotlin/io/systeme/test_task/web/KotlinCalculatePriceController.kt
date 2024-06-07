@@ -2,6 +2,7 @@ package io.systeme.test_task.web
 
 import io.systeme.test_task.service.PricingService
 import io.systeme.test_task.validation.coupon.CouponCode
+import io.systeme.test_task.validation.product.VerifyProduct
 import io.systeme.test_task.validation.tax.TaxNumber
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
@@ -22,7 +23,8 @@ class KotlinCalculatePriceController(private val pricingService: PricingService)
     }
 
     data class PriceRequest(
-        @field:NotNull val product: Int,
+        @field:NotNull(message = "Product ID cannot be null")
+        @field:VerifyProduct val product: Int?,
         @field:NotBlank @field:TaxNumber val taxNumber: String,
         @field:CouponCode val couponCode: String?
     )
